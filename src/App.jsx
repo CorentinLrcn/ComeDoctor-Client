@@ -29,7 +29,6 @@ export const auth = getAuth(firebase)
 export const db = getFirestore(firebase)
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
       <BrowserRouter>
