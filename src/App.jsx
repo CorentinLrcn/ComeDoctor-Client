@@ -7,6 +7,7 @@ import RMA from './components/RMA'
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from 'firebase/firestore';
+import MyPage from './components/MyPage';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -34,7 +35,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Connection/>} />
-          <Route path='/rma' element={<RMA/>} />
+          <Route path='/mypage/:idPatient' element={<MyPage/>} />
+          <Route path='/rma/:idPatient' element={<RMA/>} />
         </Routes>
       </BrowserRouter>
   )

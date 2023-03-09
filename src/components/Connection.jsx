@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../App';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getDocs, query, collection, where } from 'firebase/firestore';
 import { db } from '../App';
 
@@ -17,15 +17,12 @@ function Connexion() {
         e.preventDefault()
         signInWithEmailAndPassword(auth, email.current.value, password.current.value)
             .then(async (userCredential) => {
-                console.log('connected')
-                navigate('/rma/')
-                /*console.log('user : '+JSON.stringify(userCredential.user))
                 const user = userCredential.user;
-                const q = query(collection(db, import.meta.env.VITE_DATABASE_NAME), where("email", "==", user.email));
+                const q = query(collection(db, 'patients'), where("email", "==", user.email));
                 const docSnap = await getDocs(q);
                 docSnap.forEach((res) => {
-                    console.log(JSON.stringify(res.data().id))
-                })*/
+                    navigate(`/mypage/${res.data().id}`)   
+                })
             })
             .catch((error) => {
                 const errorCode = error.code;
