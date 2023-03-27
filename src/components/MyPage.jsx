@@ -35,7 +35,7 @@ function MyPage() {
             <br />
             <br />
             <br />
-            <button style={{ color: '#D89D0E' }} >Mes rendez-vous</button>
+            <button style={{ color: '#D89D0E' }} onClick={() => alert('Fonctionnalité non disponible')} >Mes rendez-vous</button>
             <br />
             <br />
             <br />
