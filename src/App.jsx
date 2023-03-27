@@ -8,6 +8,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from 'firebase/firestore';
 import MyPage from './components/MyPage';
+import MyAppointments from './components/MyAppointments';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -37,6 +38,7 @@ function App() {
           <Route path='/' element={<Connection/>} />
           <Route path='/mypage/:idPatient' element={<MyPage/>} />
           <Route path='/rma/:idPatient' element={<RMA/>} />
+          <Route path='/myappointments/:idPatient' element={<MyAppointments/>} />
         </Routes>
       </BrowserRouter>
   )

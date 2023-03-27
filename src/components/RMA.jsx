@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from "react"
 import '../styles/RMA.css'
 
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { addDoc, collection, getDocs, query } from "firebase/firestore"
 import { db } from "../App"
 
 function RMA() {
     const date = useRef()
 
-    const [doctor, setDoctor] = useState('')
     const [docList, setDocList] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [appTaken, setAppTaken] = useState(false)
 
     const params = useParams()
+
+    const navigate = useNavigate()
 
     const fetchData = async () => {
         const c = collection(db, 'doctors')
@@ -20,26 +22,22 @@ function RMA() {
         return records
     }
 
-    function highlight(idDoctor) {
-        window.document.getElementsByName(idDoctor).style.backgroundColor = "#D89D0E"
-    }
-
     async function createAppoitment(idDoctor) {
         console.log('idPatient : ' + params.idPatient)
-        console.log('idDoctor : ' + doctor)
+        console.log('idDoctor : ' + idDoctor)
         console.log('date : ' + date.current.value)
-        if (doctor != '') {
-            if (date.current.value != '') {
-                await addDoc(collection(db, 'appointments'), {
-                    idPatient: params.idPatient || null,
-                    date: date.current.value || null,
-                    idDoctor: doctor || null,
-                })
-            } else {
-                alert('merci de renseigner une date de rendez-vous et un horaire')
-            }
+        if (date.current.value != '') {
+            await addDoc(collection(db, 'appointments'), {
+                idPatient: params.idPatient || null,
+                date: date.current.value || null,
+                idDoctor: idDoctor || null,
+            })
+            setAppTaken(true)
+            setTimeout(() => {
+                navigate(`/myappointments/${params.idPatient}`)
+            }, 3000)
         } else {
-            alert('merci de choisir un practitien')
+            alert('merci de renseigner une date de rendez-vous et un horaire')
         }
     }
 
@@ -64,29 +62,23 @@ function RMA() {
             <br />
             <br />
             <br />
+            {!appTaken ? <label>
+                Choisissez votre jour :
+                <br />
+                <input type='datetime-local' ref={date} />
+            </label> : <div></div>}
+            <br />
+            <br />
             <label>Choisissez votre practitien :</label>
             <br />
-            {!isLoading ? docList.map((elem, index) => {
+            {!isLoading ? !appTaken ? docList.map((elem, index) => {
                 return (
-                    <div key={elem.id} name={elem.id} className="doctorCard" style={{ backgroundColor: 'black' }} onClick={() => highlight(elem.id)} >
+                    <div key={elem.id} name={elem.id} className="doctorCard" style={{ backgroundColor: 'black' }} onClick={() => createAppoitment(elem.id)} >
                         <p className="doctorName" >{elem.name}</p>
                         <p>{elem.speciality} - {elem.address}</p>
                     </div>
                 )
-            }) : <div></div>}
-            <br />
-            <br />
-            <label>
-                Choisissez votre jour :
-                <br />
-                <input type='datetime-local' ref={date} />
-            </label>
-            <br />
-            <br />
-            <br />
-            <br />
-            {/*<input type='submit' value='Envoyer' style={{ backgroundColor: '#D89D0E' }} />*/}
-            <button style={{ backgroundColor : '#D89D0E' }} onClick={() => createAppoitment()} >Envoyer</button>
+            }) : <div><p>Votre rendez-vous a été pris !</p><br /><p>Vous allez être redirigé...</p></div> : <div></div>}
         </div>
     )
 }
