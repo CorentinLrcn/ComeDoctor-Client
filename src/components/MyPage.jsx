@@ -35,12 +35,17 @@ function MyPage() {
             <br />
             <br />
             <br />
-            <button style={{ color: '#D89D0E' }} onClick={() => navigate('/myappointments/'+params.idPatient)} >Mes rendez-vous</button>
-            <br />
-            <br />
-            <br />
-            <br />
             <button style={{ backgroundColor: '#D89D0E' }} onClick={() => navigate('/rma/'+params.idPatient)} >Prendre un rendez-vous</button>
+            <br />
+            <br />
+            <br />
+            <br />
+            <button style={{ color: '#D89D0E', backgroundColor: 'transparent', borderColor: '#D89D0E' }} onClick={() => navigate('/myappointments/'+params.idPatient)} >Mes rendez-vous</button>
+            <br />
+            <br />
+            <br />
+            <br />
+            <button style={{ color: '#D89D0E', backgroundColor: 'transparent', textDecorationLine: 'underline' }} onClick={() => navigate('/')} >Déconnection</button>
         </div>
     )
 }

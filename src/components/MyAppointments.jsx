@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "../App"
 import { createEvent } from "ics"
@@ -18,6 +18,8 @@ function MyAppointments() {
     const [doctorsList, setDoctorsList] = useState([])
 
     const params = useParams()
+
+    const navigate = useNavigate()
 
     const fetchData = async () => {
         const q = query(collection(db, 'appointments'), where("idPatient", "==", params.idPatient))
@@ -98,6 +100,11 @@ function MyAppointments() {
         <div className="App">
             <h1>- COME DOCTOR -</h1>
             <h2>- Patient -</h2>
+            <br />
+            <br />
+            <button style={{ backgroundColor: '#D89D0E' }} onClick={() => navigate(`/mypage/${params.idPatient}`)} >Retour au menu principal</button>
+            <br />
+            <br />
             <br />
             <br />
             <label>Cliquez sur un rdv pour l'exporter vers votre calendrier</label>
