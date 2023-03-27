@@ -36,7 +36,8 @@ function Connexion() {
     return (
         <div className="App">
             <form onSubmit={handleSubmit} >
-                <h1>COME DOCTOR</h1>
+                <h1>- COME DOCTOR -</h1>
+                <h2>- Patient -</h2>
                 <br />
                 <br />
                 <br />
